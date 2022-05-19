@@ -1,10 +1,19 @@
 class Solution {
 public:
     bool isPalindrome(int x) {
-        string str = to_string(x);
-        string rev_str = str;
-        reverse(rev_str.begin(), rev_str.end());
         
-        return (str == rev_str);
+        if(x < 0 || (x%10 == 0 && x != 0))
+            return false;
+        
+        int rev = 0;
+        
+        while(rev < x)
+        {
+            rev = rev * 10 + x % 10;
+            x /= 10;
+        }
+        
+        return rev == x || rev/10 == x;
+        
     }
 };
