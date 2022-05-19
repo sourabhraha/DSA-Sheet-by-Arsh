@@ -16,19 +16,15 @@ public:
     
     bool isHappy(int n) {
         
-        map<int, int>mp;
-        int next = n;
-        while(true)
+        int slow = n;
+        int fast = nextNum(n);
+        
+        while(fast != 1 && slow != fast)
         {
-            
-            next = nextNum(next);
-            if(next == 1)
-                return true;
-            if(mp[next] == 1)
-                return false;
-            mp[next] = 1;
+            slow =  nextNum(slow);
+            fast =  nextNum( nextNum(fast));
         }
         
-        
+        return fast == 1;
     }
 };
