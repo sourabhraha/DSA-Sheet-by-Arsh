@@ -30,24 +30,42 @@ int main()
 bool findPair(int arr[], int size, int n){
   
   
-    sort(arr, arr+size);
+    // sort(arr, arr+size);
     
-    int i=0, j=1;
+    // int i=0, j=1;
     
-    while(i<size && j<size)
-    {
+    // while(i<size && j<size)
+    // {
         
-        if( i != j && abs(arr[i] - arr[j]) == n)
-            return true;
+    //     if( i != j && abs(arr[i] - arr[j]) == n)
+    //         return true;
             
-        else if(abs(arr[i] - arr[j]) > n)
-            i++;
+    //     else if(abs(arr[i] - arr[j]) > n)
+    //         i++;
         
-        else
-            j++;
+    //     else
+    //         j++;
         
+    // }
+    
+    // return false;
+    
+    unordered_map<int, int>ump;
+    
+    for(int i=0; i<size; i++){
+        ump[arr[i]]++;
+        
+        if(n == 0 && ump[arr[i]] > 1)
+            return true;
+
+    }   
+    if(n == 0)
+        return false;
+        
+    for(int i=0; i<size; i++)
+    {
+        if(n != arr[i] && ump.find(abs(n-arr[i])) != ump.end())
+            return true;
     }
-    
     return false;
-    
 }
