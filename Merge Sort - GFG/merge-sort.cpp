@@ -28,36 +28,35 @@ class Solution
          for(int i=0; i<n1; i++)    left[i] = arr[l+i];
          for(int j=0; j<n2; j++)    right[j] = arr[m+1+j];
          
+         left[n1] = right[n2] = INT_MAX;
          int i=0, j= 0, k = l;
          
-         while(i<n1 && j<n2)
+         for(k=l; k<=r; k++)
          {
              if(left[i] < right[j])
-            {
-                arr[k] = left[i];
-                i++;
-            }
-            
-            else{
-                arr[k] = right[j];
-                j++;
-            }
-            k++;
+             {
+                 arr[k] = left[i];
+                 i++;
+             }
+             else{
+                 arr[k] = right[j];
+                 j++;
+             }
          }
          
-         while(i<n1)
-         {
-             arr[k] = left[i];
-             k++;
-             i++;
-         }
+        //  while(i<n1)
+        //  {
+        //      arr[k] = left[i];
+        //      k++;
+        //      i++;
+        //  }
          
-         while(j<n2)
-         {
-             arr[k] = right[j];
-             k++;
-             j++;
-         }
+        //  while(j<n2)
+        //  {
+        //      arr[k] = right[j];
+        //      k++;
+        //      j++;
+        //  }
     }
     public:
     void mergeSort(int arr[], int l, int r)
