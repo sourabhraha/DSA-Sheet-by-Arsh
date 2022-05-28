@@ -100,9 +100,17 @@ void addNode(Node *head, int pos, int data)
     {
         t = t->next;
     }
+    
+    if(t->next == NULL)
+    {
+        t->next = temp;
+        temp->prev = t;
+    }
    
+    else{
     temp->prev = t;
     temp->next = t->next;
-//   ; t->next->prev = temp;
+    temp->next->prev = temp;
     t->next = temp;
+    }
 }
