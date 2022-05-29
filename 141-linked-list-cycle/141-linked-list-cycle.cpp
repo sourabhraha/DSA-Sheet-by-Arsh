@@ -9,16 +9,19 @@
 class Solution {
 public:
     bool hasCycle(ListNode *head) {
-        map<ListNode*, bool>mp;
-        ListNode * temp = head;
-        
-        while(temp != NULL)
+     
+        if(head == NULL)
+            return false;
+        ListNode *slow = head, *fast = head;
+      
+        while(fast != NULL && fast->next != NULL)
         {
-            if(mp[temp])
-                return true;
-            mp[temp] =  true;   
-            temp = temp->next;
+            slow = slow->next;
+            fast = fast->next->next;
+              if(slow == fast)
+                 return true;
         }
+      
         return false;
     }
 };
