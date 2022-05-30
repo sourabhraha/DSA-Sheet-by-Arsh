@@ -13,14 +13,14 @@ public:
     int getDecimalValue(ListNode* head) {
         
         ListNode *t = head;
-        string bin;
+        int dec = 0;
         
         while(t!= NULL)
         {
-            bin += to_string(t->val);   
-            t = t->next;
+          dec = dec*2 + t->val;
+          t = t->next;
         }
         
-        return stoi(bin, 0, 2);
+        return dec;
     }
 };
