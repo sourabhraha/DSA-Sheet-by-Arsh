@@ -2,33 +2,25 @@ class Solution {
 public:
     vector<int> nextGreaterElement(vector<int>& nums1, vector<int>& nums2) {
         
-        int n = nums1.size(), m = nums2.size();
-        int flag = 0;
+        stack<int>st;
         vector<int>ans;
+        unordered_map<int, int>ump;
         
-        for(int i=0; i<n; i++)
+        int n2 = nums2.size();
+        
+        for(int i = n2-1; i>=0; i--)
         {
-            for(int j=0; j<m; j++)
-            {
-                if(nums1[i] == nums2[j])
-                {
-                    int k = j+1;
-                    while(k<m)
-                    {
-                        if(nums2[k] > nums1[i])
-                        {
-                            ans.push_back(nums2[k]);
-                            break;
-                        }
-                        k++;
-                    }
-                    if(k == m) ans.push_back(-1);
-                    
-                   flag = 1;
-                }
-            }
-            if(flag == 0)   ans.push_back(-1);
+
+            while(!st.empty() && st.top() < nums2[i])
+                st.pop();
+            
+            ump[nums2[i]] = (st.empty()) ? -1 : st.top();
+            
+            st.push(nums2[i]);
         }
+        
+        for(int n:nums1)
+            ans.push_back(ump[n]);
         return ans;
     }
 };
