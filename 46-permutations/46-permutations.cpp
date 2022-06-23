@@ -1,37 +1,29 @@
 class Solution {
 public:
     
-    void calPermute(int i, int n, map<int, int>mp, vector<vector<int>>&ans, vector<int>&ds, vector<int>&nums)
+    void calPermute(int idx, int n, vector<vector<int>>&ans, vector<int>&nums)
     {
-        if(ds.size() == n)
+        if(idx == n)
         {
-            ans.push_back(ds);
+            ans.push_back(nums);
             return;
         }
         
-        for(int i=0; i<n; i++)
+        for(int i=idx; i<n; i++)
         {
-            if(!mp[i])
-            {
-                ds.push_back(nums[i]);
-                mp[i] = 1;
-                calPermute(i+1, n, mp, ans, ds, nums);
-                mp[i] = 0;
-                ds.pop_back();
-            }
-            
+            swap(nums[idx], nums[i]);
+            calPermute(idx+1, n, ans, nums);
+            swap(nums[idx], nums[i]);
         }
-    
-    }
-    
+            
+    }   
     
     
     vector<vector<int>> permute(vector<int>& nums) {
-        map<int, int>mp;
+      
         vector<vector<int>>ans;
-        vector<int>ds;
-        
-        calPermute(0, nums.size(), mp, ans, ds, nums);
+    
+        calPermute(0, nums.size(), ans, nums);
         return ans;
         
     }
