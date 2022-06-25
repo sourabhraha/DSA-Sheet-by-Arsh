@@ -1,38 +1,38 @@
 class Solution {
 public:
     
-    bool isSafe(int row, int col, int n, vector<string>&board)
-    {
+//     bool isSafe(int row, int col, int n, vector<string>&board)
+//     {
 
-            int dupRow = row, dupCol = col;
+//             int dupRow = row, dupCol = col;
         
-            while(row >= 0 && col >= 0)
-            {
-                if(board[row][col] == 'Q')     return false;
-                row--; col--;
-            }
+//             while(row >= 0 && col >= 0)
+//             {
+//                 if(board[row][col] == 'Q')     return false;
+//                 row--; col--;
+//             }
         
-            row = dupRow, col = dupCol;
+//             row = dupRow, col = dupCol;
             
-            while(col >= 0)
-            {
-                if(board[row][col] == 'Q')    return false;
-                col--;
-            }
+//             while(col >= 0)
+//             {
+//                 if(board[row][col] == 'Q')    return false;
+//                 col--;
+//             }
         
-            row = dupRow, col = dupCol;
+//             row = dupRow, col = dupCol;
         
-            while(row < n && col >=0)
-            {
-                if(board[row][col] == 'Q')    return false;
-                row++, col--;
-            }
+//             while(row < n && col >=0)
+//             {
+//                 if(board[row][col] == 'Q')    return false;
+//                 row++, col--;
+//             }
         
-            return true;
-    }
+//             return true;
+//     }
     
     
-    void solve(int col, int n, vector<vector<string>>&ans, vector<string>&board)
+    void solve(int col, int n, vector<vector<string>>&ans, vector<string>&board, vector<int>&leftRow, vector<int>&upperDig, vector<int>&lowerDig)
     {
         if(col == n)
         {
@@ -42,11 +42,17 @@ public:
         
         for(int row = 0; row < n; row++)
         {
-            if(isSafe(row, col, n,  board))
+            if(leftRow[row] == 0 && upperDig[n-1+col-row] == 0 && lowerDig[row+col] == 0)
             {
                 board[row][col] = 'Q';
-                solve(col+1, n, ans, board);
+                leftRow[row] = 1;
+                upperDig[n-1+col-row] = 1;
+                lowerDig[row+col] = 1;
+                solve(col+1, n, ans, board, leftRow, upperDig, lowerDig);
                 board[row][col] = '.';
+                leftRow[row] = 0;
+                upperDig[n-1+col-row] = 0;
+                lowerDig[row+col] = 0;
             }
         }
         
@@ -61,7 +67,9 @@ public:
         for(int i=0; i<n; i++)
             board[i] = s;
         
-        solve(0, n, ans, board);
+        vector<int>leftRow(n, 0), upperDig(2*n-1, 0), lowerDig(2*n-1, 0);
+        
+        solve(0, n, ans, board, leftRow, upperDig, lowerDig);
         return ans;
         
     }
