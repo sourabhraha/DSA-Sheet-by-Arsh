@@ -23,8 +23,8 @@ public:
         while(!s.empty())
         {
             root = s.top();
-            ans.push_back(root->val);
             s.pop();
+            ans.push_back(root->val);
             if(root->right) s.push(root->right);
             if(root->left) s.push(root->left);
         }
