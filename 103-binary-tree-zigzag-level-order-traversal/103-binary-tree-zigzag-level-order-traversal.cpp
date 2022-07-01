@@ -23,7 +23,7 @@ public:
         {
 
             int size = q.size();
-            vector<int>level;
+            vector<int>level(size);
             
             for(int i=0; i<size; i++)
             {
@@ -32,18 +32,12 @@ public:
                 
                 if(root->left != NULL) q.push(root->left);
                 if(root->right != NULL) q.push(root->right);
-                level.push_back(root->val);
+                int index = (flag) ? i : (size-i-1);
+                level[index] = root->val;
                 
             }
-            if(flag){
-                ans.push_back(level);
-                flag = !flag;
-            }
-            else{
-                reverse(level.begin(), level.end());
-                ans.push_back(level);
-                flag = !flag;
-            }
+            flag = !flag;
+            ans.push_back(level);
             
         }
     
