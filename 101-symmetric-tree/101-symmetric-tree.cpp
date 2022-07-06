@@ -11,20 +11,32 @@
  */
 class Solution {
 public:
-    
-    bool isSymHelp(TreeNode *left, TreeNode *right)
-    {
-        if(!left || !right) return left == right;
-        
-        if(left->val != right->val) return false;
-        
-        return isSymHelp(left->left, right->right) && isSymHelp(left->right, right->left);
-    }
-    
     bool isSymmetric(TreeNode* root) {
-        
         if(!root) return true;
-        return isSymHelp(root->left, root->right);
+        queue<TreeNode*>q;
+        q.push(root->left);
+        q.push(root->right);
         
+        while(!q.empty())
+        {
+
+            TreeNode *node1 = q.front();
+            q.pop();
+            TreeNode *node2 = q.front();
+            q.pop();
+            
+            if(!node1 && !node2) continue;
+            if(!node1 || !node2) return false;
+            
+            if(node1->val != node2->val) return false;
+            
+          
+            q.push(node1->left);
+            q.push(node2->right);
+            q.push(node1->right);
+            q.push(node2->left);
+    
+        }
+        return true;
     }
 };
