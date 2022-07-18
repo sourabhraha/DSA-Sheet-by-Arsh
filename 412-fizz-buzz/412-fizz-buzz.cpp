@@ -1,15 +1,23 @@
 class Solution {
 public:
     vector<string> fizzBuzz(int n) {
-        vector<string>ans(n);
+        
+        vector<string>ans;
+        map<int, string>mp{{3,"Fizz"}, {5, "Buzz"}};
         
         for(int i=1; i<=n; i++)
         {
-            if(i%3 == 0 && i%5 == 0)  ans[i-1] = "FizzBuzz";
-            else if(i%3 == 0) ans[i-1] = "Fizz";
-            else if(i%5 == 0) ans[i-1] = "Buzz";
-            else              ans[i-1] = to_string(i);
+                string s = "";
+            for(auto it:mp)
+            {
+                if(i%it.first == 0)     s += it.second;
+            }
+            if(s == "")
+                s += to_string(i);
+            
+            ans.push_back(s);
         }
+      
         return ans;
     }
 };
