@@ -1,52 +1,30 @@
 class Solution {
 public:
     
-    map<char, int> compute(string temp)
-    {
-         map<char, int>cnt;
-         for(int i=0; i<temp.length(); i++)  cnt[temp[i]]++;
-         return cnt;
-    }
-    
-    
     vector<string> wordSubsets(vector<string>& words1, vector<string>& words2) {
         
-        
-        map<char, int>mp;
-      
-        for(int i=0; i<words2.size(); i++)
-        {
-            string temp = words2[i];
-            map<char, int>check = compute(temp);
-            
-            for(char ch = 'a'; ch <= 'z'; ch++)
-                mp[ch] = max(mp[ch], check[ch]);
-      
+       vector<int> count(26), tmp(26);
+        int i;
+        for (string b : words2) {
+            tmp = counter(b);
+            for (i = 0; i < 26; ++i)
+                count[i] = max(count[i], tmp[i]);
         }
-        
-        vector<string>ans;
-        
-        for(int j=0; j<words1.size(); j++)
-        {
-            string temp = words1[j];
-            map<char, int>cnt = compute(temp);
-             
-            bool flag = true;
-   
-            for(char ch = 'a'; ch <= 'z'; ch++)
-            {
-            
-                if(mp[ch] > cnt[ch])
-                {
-                    flag = false;
+        vector<string> res;
+        for (string a : words1) {
+            tmp = counter(a);
+            for (i = 0; i < 26; ++i)
+                if (tmp[i] < count[i])
                     break;
-                }   
-            }
-            
-            if(flag == true) ans.push_back(words1[j]);
-            
+            if (i == 26) res.push_back(a);
         }
-     
-        return ans;   
+        return res;
     }
+
+    vector<int> counter(string& word) {
+        vector<int> count(26);
+        for (char c : word) count[c - 'a']++;
+        return count;
+    }
+    
 };
