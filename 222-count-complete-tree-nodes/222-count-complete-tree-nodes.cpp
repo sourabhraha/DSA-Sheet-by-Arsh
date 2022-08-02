@@ -12,21 +12,38 @@
 class Solution {
 public:
     
-    void countPre(TreeNode *root, int &cnt)
+    int findLeftHeight(TreeNode *node)
     {
-        if(root)
+        int lh = 0;
+        
+        while(node)
         {
-            cnt++;
-            countPre(root->left, cnt);
-            countPre(root->right, cnt);
+            lh++;
+            node = node->left;
         }
+        return lh;
     }
     
+    int findRightHeight(TreeNode *node)
+    {
+        int rh = 0;
+        
+        while(node)
+        {
+            rh++;
+            node = node->right;
+        }
+        return rh;
+    }
     
     int countNodes(TreeNode* root) {
         if(!root) return 0;
-        int cnt = 0;
-        countPre(root, cnt);
-        return cnt;
+        
+        int lh = findLeftHeight(root->left);
+        int rh = findRightHeight(root->right);
+        
+        if(lh == rh) return (2<<lh) - 1;
+        
+        return 1 + countNodes(root->left) + countNodes(root->right);
     }
 };
