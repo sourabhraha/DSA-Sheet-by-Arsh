@@ -18,31 +18,20 @@ public:
 
 class Solution {
 public:
+    
+    void populateRight(Node *root)
+    {
+        if(!root) return;
+        
+        if(root->left != NULL) root->left->next = root->right;
+        if(root->right != NULL && root->next != NULL) 
+                               root->right->next = root->next->left;
+        populateRight(root->left);
+        populateRight(root->right);
+    }
+    
     Node* connect(Node* root) {
-        if(!root)
-            return root;
-        
-        queue<Node*>q;
-        q.push(root);
-        
-        while(!q.empty())
-        {
-            int size = q.size();
-            Node *rightPtr = NULL;
-            for(int i=size-1; i>=0; i--)
-            {
-                auto node = q.front();
-                q.pop();
-                node->next = rightPtr;
-                rightPtr = node;
-                
-                if(node->right) q.push(node->right);
-                if(node->left)  q.push(node->left);
-   
-            }
-            
-        
-        }
+        populateRight(root);
         return root;
     }
 };
